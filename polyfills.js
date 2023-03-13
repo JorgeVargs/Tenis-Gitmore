@@ -8,7 +8,7 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _angular_localize_init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/localize/init */ 6344);
+/* harmony import */ var _angular_localize_init__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/localize/init */ 3757);
 /* harmony import */ var zone_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zone.js */ 4924);
 /* harmony import */ var zone_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(zone_js__WEBPACK_IMPORTED_MODULE_1__);
 /***************************************************************************************************
@@ -33,6 +33,16 @@ __webpack_require__.r(__webpack_exports__);
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
+/**
+ * IE11 requires the following for NgClass support on SVG elements
+ */
+// import 'classlist.js';  // Run `npm install --save classlist.js`.
+/**
+ * Web Animations `@angular/platform-browser/animations`
+ * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
+ * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
+ */
+// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags
@@ -3394,9 +3404,9 @@ Zone.__load_patch('PromiseRejectionEvent', (global, Zone) => {
 
 /***/ }),
 
-/***/ 8781:
+/***/ 8305:
 /*!**************************************************************!*\
-  !*** ./node_modules/@angular/compiler/fesm2020/compiler.mjs ***!
+  !*** ./node_modules/@angular/compiler/fesm2015/compiler.mjs ***!
   \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -3703,7 +3713,7 @@ class HtmlTagDefinition {
   getContentType(prefix) {
     if (typeof this.contentType === 'object') {
       const overrideType = prefix === undefined ? undefined : this.contentType[prefix];
-      return overrideType ?? this.contentType.default;
+      return overrideType !== null && overrideType !== void 0 ? overrideType : this.contentType.default;
     }
 
     return this.contentType;
@@ -3718,6 +3728,8 @@ let _DEFAULT_TAG_DEFINITION; // see https://www.w3.org/TR/html51/syntax.html#opt
 let TAG_DEFINITIONS;
 
 function getHtmlTagDefinition(tagName) {
+  var _a, _b;
+
   if (!TAG_DEFINITIONS) {
     _DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
     TAG_DEFINITIONS = {
@@ -3871,7 +3883,7 @@ function getHtmlTagDefinition(tagName) {
   // HTML tag names are case insensitive, whereas some SVG tags are case sensitive.
 
 
-  return TAG_DEFINITIONS[tagName] ?? TAG_DEFINITIONS[tagName.toLowerCase()] ?? _DEFAULT_TAG_DEFINITION;
+  return (_b = (_a = TAG_DEFINITIONS[tagName]) !== null && _a !== void 0 ? _a : TAG_DEFINITIONS[tagName.toLowerCase()]) !== null && _b !== void 0 ? _b : _DEFAULT_TAG_DEFINITION;
 }
 /**
  * @license
@@ -5774,6 +5786,8 @@ class TemplateLiteral {
 
 class TemplateLiteralElement {
   constructor(text, sourceSpan, rawText) {
+    var _a;
+
     this.text = text;
     this.sourceSpan = sourceSpan; // If `rawText` is not provided, try to extract the raw string from its
     // associated `sourceSpan`. If that is also not available, "fake" the raw
@@ -5782,7 +5796,7 @@ class TemplateLiteralElement {
     // - "`" and "${" are template string control sequences that would otherwise prematurely
     // indicate the end of the template literal element.
 
-    this.rawText = rawText ?? sourceSpan?.toString() ?? escapeForTemplateLiteral(escapeSlashes(text));
+    this.rawText = (_a = rawText !== null && rawText !== void 0 ? rawText : sourceSpan === null || sourceSpan === void 0 ? void 0 : sourceSpan.toString()) !== null && _a !== void 0 ? _a : escapeForTemplateLiteral(escapeSlashes(text));
   }
 
 }
@@ -5869,11 +5883,15 @@ class LocalizedString extends Expression {
   }
 
   getMessagePartSourceSpan(i) {
-    return this.messageParts[i]?.sourceSpan ?? this.sourceSpan;
+    var _a, _b;
+
+    return (_b = (_a = this.messageParts[i]) === null || _a === void 0 ? void 0 : _a.sourceSpan) !== null && _b !== void 0 ? _b : this.sourceSpan;
   }
 
   getPlaceholderSourceSpan(i) {
-    return this.placeHolderNames[i]?.sourceSpan ?? this.expressions[i]?.sourceSpan ?? this.sourceSpan;
+    var _a, _b, _c, _d;
+
+    return (_d = (_b = (_a = this.placeHolderNames[i]) === null || _a === void 0 ? void 0 : _a.sourceSpan) !== null && _b !== void 0 ? _b : (_c = this.expressions[i]) === null || _c === void 0 ? void 0 : _c.sourceSpan) !== null && _d !== void 0 ? _d : this.sourceSpan;
   }
   /**
    * Serialize the given `placeholderName` and `messagePart` into "cooked" and "raw" strings that
@@ -5889,11 +5907,13 @@ class LocalizedString extends Expression {
 
 
   serializeI18nTemplatePart(partIndex) {
+    var _a;
+
     const placeholder = this.placeHolderNames[partIndex - 1];
     const messagePart = this.messageParts[partIndex];
     let metaBlock = placeholder.text;
 
-    if (placeholder.associatedMessage?.legacyIds.length === 0) {
+    if (((_a = placeholder.associatedMessage) === null || _a === void 0 ? void 0 : _a.legacyIds.length) === 0) {
       metaBlock += `${ID_SEPARATOR$1}${computeMsgId(placeholder.associatedMessage.messageString, placeholder.associatedMessage.meaning)}`;
     }
 
@@ -6278,7 +6298,9 @@ class Statement {
   }
 
   addLeadingComment(leadingComment) {
-    this.leadingComments = this.leadingComments ?? [];
+    var _a;
+
+    this.leadingComments = (_a = this.leadingComments) !== null && _a !== void 0 ? _a : [];
     this.leadingComments.push(leadingComment);
   }
 
@@ -10377,13 +10399,15 @@ function getInterpolationArgsLength(interpolation) {
 
 
 function getInstructionStatements(instructions) {
+  var _a;
+
   const statements = [];
   let pendingExpression = null;
   let pendingExpressionType = null;
   let chainLength = 0;
 
   for (const current of instructions) {
-    const resolvedParams = (typeof current.paramsOrFn === 'function' ? current.paramsOrFn() : current.paramsOrFn) ?? [];
+    const resolvedParams = (_a = typeof current.paramsOrFn === 'function' ? current.paramsOrFn() : current.paramsOrFn) !== null && _a !== void 0 ? _a : [];
     const params = Array.isArray(resolvedParams) ? resolvedParams : [resolvedParams]; // If the current instruction is the same as the previous one
     // and it can be chained, add another call to the chain.
 
@@ -10446,11 +10470,11 @@ function compileInjectable(meta, resolveForwardRefs) {
 
     if (deps !== undefined) {
       // factory: () => new meta.useClass(...deps)
-      result = compileFactoryFunction({ ...factoryMeta,
+      result = compileFactoryFunction(Object.assign(Object.assign({}, factoryMeta), {
         delegate: meta.useClass.expression,
         delegateDeps: deps,
         delegateType: R3FactoryDelegateType.Class
-      });
+      }));
     } else if (useClassOnSelf) {
       result = compileFactoryFunction(factoryMeta);
     } else {
@@ -10461,11 +10485,11 @@ function compileInjectable(meta, resolveForwardRefs) {
     }
   } else if (meta.useFactory !== undefined) {
     if (meta.deps !== undefined) {
-      result = compileFactoryFunction({ ...factoryMeta,
+      result = compileFactoryFunction(Object.assign(Object.assign({}, factoryMeta), {
         delegate: meta.useFactory,
         delegateDeps: meta.deps || [],
         delegateType: R3FactoryDelegateType.Function
-      });
+      }));
     } else {
       result = {
         statements: [],
@@ -10476,14 +10500,14 @@ function compileInjectable(meta, resolveForwardRefs) {
     // Note: it's safe to use `meta.useValue` instead of the `USE_VALUE in meta` check used for
     // client code because meta.useValue is an Expression which will be defined even if the actual
     // value is undefined.
-    result = compileFactoryFunction({ ...factoryMeta,
+    result = compileFactoryFunction(Object.assign(Object.assign({}, factoryMeta), {
       expression: meta.useValue.expression
-    });
+    }));
   } else if (meta.useExisting !== undefined) {
     // useExisting is an `inject` call on the existing token.
-    result = compileFactoryFunction({ ...factoryMeta,
+    result = compileFactoryFunction(Object.assign(Object.assign({}, factoryMeta), {
       expression: importExpr(Identifiers.inject).callFn([meta.useExisting.expression])
-    });
+    }));
   } else {
     result = {
       statements: [],
@@ -11075,7 +11099,7 @@ function getPolicy() {
         policy = _global.trustedTypes.createPolicy('angular#unsafe-jit', {
           createScript: s => s
         });
-      } catch {// trustedTypes.createPolicy throws if called with a name that is
+      } catch (_a) {// trustedTypes.createPolicy throws if called with a name that is
         // already registered, even in report-only mode. Until the API changes,
         // catch the error not to break the applications functionally. In such
         // cases, the code will fall back to using strings.
@@ -11095,7 +11119,9 @@ function getPolicy() {
 
 
 function trustedScriptFromString(script) {
-  return getPolicy()?.createScript(script) || script;
+  var _a;
+
+  return ((_a = getPolicy()) === null || _a === void 0 ? void 0 : _a.createScript(script)) || script;
 }
 /**
  * Unsafely call the Function constructor with the given string arguments.
@@ -11752,7 +11778,9 @@ class ImplicitReceiver extends AST {
 
 class ThisReceiver extends ImplicitReceiver {
   visit(visitor, context = null) {
-    return visitor.visitThisReceiver?.(this, context);
+    var _a;
+
+    return (_a = visitor.visitThisReceiver) === null || _a === void 0 ? void 0 : _a.call(visitor, this, context);
   }
 
 }
@@ -13038,7 +13066,9 @@ class _AstToIrVisitor {
   }
 
   _getLocal(name, receiver) {
-    if (this._localResolver.globals?.has(name) && receiver instanceof ThisReceiver) {
+    var _a;
+
+    if (((_a = this._localResolver.globals) === null || _a === void 0 ? void 0 : _a.has(name)) && receiver instanceof ThisReceiver) {
       return null;
     }
 
@@ -13869,11 +13899,13 @@ class ShadowCss {
 
   _convertColonHostContext(cssText) {
     return cssText.replace(_cssColonHostContextReGlobal, selectorText => {
-      // We have captured a selector that contains a `:host-context` rule.
+      var _a; // We have captured a selector that contains a `:host-context` rule.
       // For backward compatibility `:host-context` may contain a comma separated list of selectors.
       // Each context selector group will contain a list of host-context selectors that must match
       // an ancestor of the host.
       // (Normally `contextSelectorGroups` will only contain a single array of context selectors.)
+
+
       const contextSelectorGroups = [[]]; // There may be more than `:host-context` in this selector so `selectorText` could look like:
       // `:host-context(.one):host-context(.two)`.
       // Execute `_cssColonHostContextRe` over and over until we have extracted all the
@@ -13884,7 +13916,7 @@ class ShadowCss {
       while (match = _cssColonHostContextRe.exec(selectorText)) {
         // `match` = [':host-context(<selectors>)<rest>', <selectors>, <rest>]
         // The `<selectors>` could actually be a comma separated list: `:host-context(.one, .two)`.
-        const newContextSelectors = (match[1] ?? '').trim().split(',').map(m => m.trim()).filter(m => m !== ''); // We must duplicate the current selector group for each of these new selectors.
+        const newContextSelectors = ((_a = match[1]) !== null && _a !== void 0 ? _a : '').trim().split(',').map(m => m.trim()).filter(m => m !== ''); // We must duplicate the current selector group for each of these new selectors.
         // For example if the current groups are:
         // ```
         // [
@@ -15896,6 +15928,8 @@ class Parser$1 {
 
 
   splitInterpolation(input, location, interpolatedTokens, interpolationConfig = DEFAULT_INTERPOLATION_CONFIG) {
+    var _a;
+
     const strings = [];
     const expressions = [];
     const offsets = [];
@@ -15952,7 +15986,7 @@ class Parser$1 {
           start: fullStart,
           end: fullEnd
         });
-        const startInOriginalTemplate = inputToTemplateIndexMap?.get(fullStart) ?? fullStart;
+        const startInOriginalTemplate = (_a = inputToTemplateIndexMap === null || inputToTemplateIndexMap === void 0 ? void 0 : inputToTemplateIndexMap.get(fullStart)) !== null && _a !== void 0 ? _a : fullStart;
         const offset = startInOriginalTemplate + interpStart.length;
         offsets.push(offset);
         i = fullEnd;
@@ -16722,7 +16756,9 @@ class _ParseAST {
   parseAccessMember(readReceiver, start, isSafe) {
     const nameStart = this.inputIndex;
     const id = this.withContext(ParseContextFlags.Writable, () => {
-      const id = this.expectIdentifierOrKeyword() ?? '';
+      var _a;
+
+      const id = (_a = this.expectIdentifierOrKeyword()) !== null && _a !== void 0 ? _a : '';
 
       if (id.length === 0) {
         this.error(`Expected identifier for property access`, readReceiver.span.end);
@@ -19672,7 +19708,7 @@ class _Tokenizer {
     const token = {
       type: this._currentTokenType,
       parts,
-      sourceSpan: (end ?? this._cursor).getSpan(this._currentTokenStart, this._leadingTriviaCodePoints)
+      sourceSpan: (end !== null && end !== void 0 ? end : this._cursor).getSpan(this._currentTokenStart, this._leadingTriviaCodePoints)
     };
     this.tokens.push(token);
     this._currentTokenStart = null;
@@ -19835,7 +19871,7 @@ class _Tokenizer {
         const charCode = parseInt(strNum, isHex ? 16 : 10);
 
         this._endToken([String.fromCharCode(charCode), this._cursor.getChars(start)]);
-      } catch {
+      } catch (_a) {
         throw this._createError(_unknownEntityErrorMsg(this._cursor.getChars(start)), this._cursor.getSpan());
       }
     } else {
@@ -20664,8 +20700,7 @@ class EscapedCharacterCursor extends PlainCharacterCursor {
   constructor(fileOrCursor, range) {
     if (fileOrCursor instanceof EscapedCharacterCursor) {
       super(fileOrCursor);
-      this.internalState = { ...fileOrCursor.internalState
-      };
+      this.internalState = Object.assign({}, fileOrCursor.internalState);
     } else {
       super(fileOrCursor, range);
       this.internalState = this.state;
@@ -20711,8 +20746,7 @@ class EscapedCharacterCursor extends PlainCharacterCursor {
     if (peek() === $BACKSLASH) {
       // We have hit an escape sequence so we need the internal state to become independent
       // of the external state.
-      this.internalState = { ...this.state
-      }; // Move past the backslash
+      this.internalState = Object.assign({}, this.state); // Move past the backslash
 
       this.advanceState(this.internalState); // First check for standard control char sequences
 
@@ -21828,7 +21862,9 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
   }
 
   getMappedPropName(propName) {
-    return _ATTR_TO_PROP.get(propName) ?? propName;
+    var _a;
+
+    return (_a = _ATTR_TO_PROP.get(propName)) !== null && _a !== void 0 ? _a : propName;
   }
 
   getDefaultComponentElementName() {
@@ -21871,11 +21907,17 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
     const elementProperties = this._schema.get(tagName.toLowerCase()) || this._schema.get('unknown'); // Convert properties to attributes.
 
 
-    return Array.from(elementProperties.keys()).map(prop => _PROP_TO_ATTR.get(prop) ?? prop);
+    return Array.from(elementProperties.keys()).map(prop => {
+      var _a;
+
+      return (_a = _PROP_TO_ATTR.get(prop)) !== null && _a !== void 0 ? _a : prop;
+    });
   }
 
   allKnownEventsOfElement(tagName) {
-    return Array.from(this._eventSchema.get(tagName.toLowerCase()) ?? []);
+    var _a;
+
+    return Array.from((_a = this._eventSchema.get(tagName.toLowerCase())) !== null && _a !== void 0 ? _a : []);
   }
 
   normalizeAnimationStyleProperty(propName) {
@@ -22895,6 +22937,8 @@ class HtmlAstToIvyAst {
   }
 
   parseAttribute(isTemplateElement, attribute, matchableAttributes, parsedProperties, boundEvents, variables, references) {
+    var _a;
+
     const name = normalizeAttributeName(attribute.name);
     const value = attribute.value;
     const srcSpan = attribute.sourceSpan;
@@ -22989,7 +23033,7 @@ class HtmlAstToIvyAst {
     const keySpan = createKeySpan(srcSpan, ''
     /* prefix */
     , name);
-    const hasBinding = this.bindingParser.parsePropertyInterpolation(name, value, srcSpan, attribute.valueSpan, matchableAttributes, parsedProperties, keySpan, attribute.valueTokens ?? null);
+    const hasBinding = this.bindingParser.parsePropertyInterpolation(name, value, srcSpan, attribute.valueSpan, matchableAttributes, parsedProperties, keySpan, (_a = attribute.valueTokens) !== null && _a !== void 0 ? _a : null);
     return hasBinding;
   }
 
@@ -23575,6 +23619,8 @@ class _I18nVisitor {
   }
 
   visitElement(el, context) {
+    var _a;
+
     const children = visitAll(this, el.children, context);
     const attrs = {};
     el.attrs.forEach(attr => {
@@ -23593,7 +23639,7 @@ class _I18nVisitor {
       closePhName = context.placeholderRegistry.getCloseTagPlaceholderName(el.name);
       context.placeholderToContent[closePhName] = {
         text: `</${el.name}>`,
-        sourceSpan: el.endSourceSpan ?? el.sourceSpan
+        sourceSpan: (_a = el.endSourceSpan) !== null && _a !== void 0 ? _a : el.sourceSpan
       };
     }
 
@@ -24248,11 +24294,13 @@ class LocalizeSerializerVisitor {
   }
 
   visitTagPlaceholder(ph) {
-    this.pieces.push(this.createPlaceholderPiece(ph.startName, ph.startSourceSpan ?? ph.sourceSpan));
+    var _a, _b;
+
+    this.pieces.push(this.createPlaceholderPiece(ph.startName, (_a = ph.startSourceSpan) !== null && _a !== void 0 ? _a : ph.sourceSpan));
 
     if (!ph.isVoid) {
       ph.children.forEach(child => child.visit(this));
-      this.pieces.push(this.createPlaceholderPiece(ph.closeName, ph.endSourceSpan ?? ph.sourceSpan));
+      this.pieces.push(this.createPlaceholderPiece(ph.closeName, (_b = ph.endSourceSpan) !== null && _b !== void 0 ? _b : ph.sourceSpan));
     }
   }
 
@@ -24384,8 +24432,8 @@ function prepareEventListenerParameters(eventAst, handlerName = null, scope = nu
   const implicitReceiverExpr = scope === null || scope.bindingLevel === 0 ? variable(CONTEXT_NAME) : scope.getOrCreateSharedContextVar(0);
   const bindingStatements = convertActionBinding(scope, implicitReceiverExpr, handler, 'b', eventAst.handlerSpan, implicitReceiverAccesses, EVENT_BINDING_SCOPE_GLOBALS);
   const statements = [];
-  const variableDeclarations = scope?.variableDeclarations();
-  const restoreViewStatement = scope?.restoreViewStatement();
+  const variableDeclarations = scope === null || scope === void 0 ? void 0 : scope.variableDeclarations();
+  const restoreViewStatement = scope === null || scope === void 0 ? void 0 : scope.restoreViewStatement();
 
   if (variableDeclarations) {
     // `variableDeclarations` needs to run first, because
@@ -24908,6 +24956,8 @@ class TemplateDefinitionBuilder {
   }
 
   visitElement(element) {
+    var _a, _b;
+
     const elementIndex = this.allocateDataSlot();
     const stylingBuilder = new StylingBuilder(null);
     let isNonBindableMode = false;
@@ -24990,7 +25040,7 @@ class TemplateDefinitionBuilder {
       }
 
       if (boundI18nAttrs.length > 0) {
-        this.i18nAttributesInstruction(elementIndex, boundI18nAttrs, element.startSourceSpan ?? element.sourceSpan);
+        this.i18nAttributesInstruction(elementIndex, boundI18nAttrs, (_a = element.startSourceSpan) !== null && _a !== void 0 ? _a : element.sourceSpan);
       } // Generate Listeners (outputs)
 
 
@@ -25133,7 +25183,7 @@ class TemplateDefinitionBuilder {
 
     if (!createSelfClosingInstruction) {
       // Finish element construction mode.
-      const span = element.endSourceSpan ?? element.sourceSpan;
+      const span = (_b = element.endSourceSpan) !== null && _b !== void 0 ? _b : element.sourceSpan;
 
       if (isI18nRootElement) {
         this.i18nEnd(span, createSelfClosingI18nInstruction);
@@ -25148,6 +25198,8 @@ class TemplateDefinitionBuilder {
   }
 
   visitTemplate(template) {
+    var _a;
+
     const NG_TEMPLATE_TAG_NAME = 'ng-template';
     const templateIndex = this.allocateDataSlot();
 
@@ -25203,7 +25255,7 @@ class TemplateDefinitionBuilder {
       // nested template function.
 
       if (i18nInputs.length > 0) {
-        this.i18nAttributesInstruction(templateIndex, i18nInputs, template.startSourceSpan ?? template.sourceSpan);
+        this.i18nAttributesInstruction(templateIndex, i18nInputs, (_a = template.startSourceSpan) !== null && _a !== void 0 ? _a : template.sourceSpan);
       } // Add the input bindings
 
 
@@ -25273,9 +25325,7 @@ class TemplateDefinitionBuilder {
     // - all ICU vars (such as `VAR_SELECT` or `VAR_PLURAL`) are replaced with correct values
 
     const transformFn = raw => {
-      const params = { ...vars,
-        ...placeholders
-      };
+      const params = Object.assign(Object.assign({}, vars), placeholders);
       const formatted = formatI18nPlaceholderNamesInMap(params,
       /* useCamelCase */
       false);
@@ -26222,11 +26272,11 @@ function parseTemplate(template, templateUrl, options = {}) {
   } = options;
   const bindingParser = makeBindingParser(interpolationConfig);
   const htmlParser = new HtmlParser();
-  const parseResult = htmlParser.parse(template, templateUrl, {
-    leadingTriviaChars: LEADING_TRIVIA_CHARS,
-    ...options,
+  const parseResult = htmlParser.parse(template, templateUrl, Object.assign(Object.assign({
+    leadingTriviaChars: LEADING_TRIVIA_CHARS
+  }, options), {
     tokenizeExpansionForms: true
-  });
+  }));
 
   if (!options.alwaysAttemptHtmlToR3AstConversion && parseResult.errors && parseResult.errors.length > 0) {
     const parsedTemplate = {
@@ -27290,6 +27340,8 @@ class CompilerFacadeImpl {
   }
 
   compileInjectable(angularCoreEnv, sourceMapUrl, facade) {
+    var _a;
+
     const {
       expression,
       statements
@@ -27303,7 +27355,7 @@ class CompilerFacadeImpl {
       useFactory: wrapExpression(facade, 'useFactory'),
       useValue: convertToProviderExpression(facade, 'useValue'),
       useExisting: convertToProviderExpression(facade, 'useExisting'),
-      deps: facade.deps?.map(convertR3DependencyMetadata)
+      deps: (_a = facade.deps) === null || _a === void 0 ? void 0 : _a.map(convertR3DependencyMetadata)
     },
     /* resolveForwardRefs */
     true);
@@ -27311,6 +27363,8 @@ class CompilerFacadeImpl {
   }
 
   compileInjectableDeclaration(angularCoreEnv, sourceMapUrl, facade) {
+    var _a;
+
     const {
       expression,
       statements
@@ -27324,7 +27378,7 @@ class CompilerFacadeImpl {
       useFactory: wrapExpression(facade, 'useFactory'),
       useValue: convertToProviderExpression(facade, 'useValue'),
       useExisting: convertToProviderExpression(facade, 'useExisting'),
-      deps: facade.deps?.map(convertR3DeclareDependencyMetadata)
+      deps: (_a = facade.deps) === null || _a === void 0 ? void 0 : _a.map(convertR3DeclareDependencyMetadata)
     },
     /* resolveForwardRefs */
     true);
@@ -27399,8 +27453,7 @@ class CompilerFacadeImpl {
       interpolation
     } = parseJitTemplate(facade.template, facade.name, sourceMapUrl, facade.preserveWhitespaces, facade.interpolation); // Compile the component metadata, including template, into an expression.
 
-    const meta = { ...facade,
-      ...convertDirectiveFacadeToMetadata(facade),
+    const meta = Object.assign(Object.assign(Object.assign({}, facade), convertDirectiveFacadeToMetadata(facade)), {
       selector: facade.selector || this.elementSchemaRegistry.getDefaultComponentElementName(),
       template,
       declarations: facade.declarations.map(convertDeclarationFacadeToMetadata),
@@ -27415,7 +27468,7 @@ class CompilerFacadeImpl {
       viewProviders: facade.viewProviders != null ? new WrappedNodeExpr(facade.viewProviders) : null,
       relativeContextFilePath: '',
       i18nUseExternalIds: true
-    };
+    });
     const jitExpressionSourceMap = `ng:///${facade.name}.js`;
     return this.compileComponentFromMeta(angularCoreEnv, jitExpressionSourceMap, meta);
   }
@@ -27485,23 +27538,25 @@ class CompilerFacadeImpl {
 }
 
 function convertToR3QueryMetadata(facade) {
-  return { ...facade,
+  return Object.assign(Object.assign({}, facade), {
     predicate: convertQueryPredicate(facade.predicate),
     read: facade.read ? new WrappedNodeExpr(facade.read) : null,
     static: facade.static,
     emitDistinctChangesOnly: facade.emitDistinctChangesOnly
-  };
+  });
 }
 
 function convertQueryDeclarationToMetadata(declaration) {
+  var _a, _b, _c, _d;
+
   return {
     propertyName: declaration.propertyName,
-    first: declaration.first ?? false,
+    first: (_a = declaration.first) !== null && _a !== void 0 ? _a : false,
     predicate: convertQueryPredicate(declaration.predicate),
-    descendants: declaration.descendants ?? false,
+    descendants: (_b = declaration.descendants) !== null && _b !== void 0 ? _b : false,
     read: declaration.read ? new WrappedNodeExpr(declaration.read) : null,
-    static: declaration.static ?? false,
-    emitDistinctChangesOnly: declaration.emitDistinctChangesOnly ?? true
+    static: (_c = declaration.static) !== null && _c !== void 0 ? _c : false,
+    emitDistinctChangesOnly: (_d = declaration.emitDistinctChangesOnly) !== null && _d !== void 0 ? _d : true
   };
 }
 
@@ -27532,56 +27587,56 @@ function convertDirectiveFacadeToMetadata(facade) {
     }
   }
 
-  return { ...facade,
+  return Object.assign(Object.assign({}, facade), {
     typeArgumentCount: 0,
     typeSourceSpan: facade.typeSourceSpan,
     type: wrapReference(facade.type),
     internalType: new WrappedNodeExpr(facade.type),
     deps: null,
     host: extractHostBindings(facade.propMetadata, facade.typeSourceSpan, facade.host),
-    inputs: { ...inputsFromMetadata,
-      ...inputsFromType
-    },
-    outputs: { ...outputsFromMetadata,
-      ...outputsFromType
-    },
+    inputs: Object.assign(Object.assign({}, inputsFromMetadata), inputsFromType),
+    outputs: Object.assign(Object.assign({}, outputsFromMetadata), outputsFromType),
     queries: facade.queries.map(convertToR3QueryMetadata),
     providers: facade.providers != null ? new WrappedNodeExpr(facade.providers) : null,
     viewQueries: facade.viewQueries.map(convertToR3QueryMetadata),
     fullInheritance: false
-  };
+  });
 }
 
 function convertDeclareDirectiveFacadeToMetadata(declaration, typeSourceSpan) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+
   return {
     name: declaration.type.name,
     type: wrapReference(declaration.type),
     typeSourceSpan,
     internalType: new WrappedNodeExpr(declaration.type),
-    selector: declaration.selector ?? null,
-    inputs: declaration.inputs ?? {},
-    outputs: declaration.outputs ?? {},
+    selector: (_a = declaration.selector) !== null && _a !== void 0 ? _a : null,
+    inputs: (_b = declaration.inputs) !== null && _b !== void 0 ? _b : {},
+    outputs: (_c = declaration.outputs) !== null && _c !== void 0 ? _c : {},
     host: convertHostDeclarationToMetadata(declaration.host),
-    queries: (declaration.queries ?? []).map(convertQueryDeclarationToMetadata),
-    viewQueries: (declaration.viewQueries ?? []).map(convertQueryDeclarationToMetadata),
+    queries: ((_d = declaration.queries) !== null && _d !== void 0 ? _d : []).map(convertQueryDeclarationToMetadata),
+    viewQueries: ((_e = declaration.viewQueries) !== null && _e !== void 0 ? _e : []).map(convertQueryDeclarationToMetadata),
     providers: declaration.providers !== undefined ? new WrappedNodeExpr(declaration.providers) : null,
-    exportAs: declaration.exportAs ?? null,
-    usesInheritance: declaration.usesInheritance ?? false,
+    exportAs: (_f = declaration.exportAs) !== null && _f !== void 0 ? _f : null,
+    usesInheritance: (_g = declaration.usesInheritance) !== null && _g !== void 0 ? _g : false,
     lifecycle: {
-      usesOnChanges: declaration.usesOnChanges ?? false
+      usesOnChanges: (_h = declaration.usesOnChanges) !== null && _h !== void 0 ? _h : false
     },
     deps: null,
     typeArgumentCount: 0,
     fullInheritance: false,
-    isStandalone: declaration.isStandalone ?? false
+    isStandalone: (_j = declaration.isStandalone) !== null && _j !== void 0 ? _j : false
   };
 }
 
 function convertHostDeclarationToMetadata(host = {}) {
+  var _a, _b, _c;
+
   return {
-    attributes: convertOpaqueValuesToExpressions(host.attributes ?? {}),
-    listeners: host.listeners ?? {},
-    properties: host.properties ?? {},
+    attributes: convertOpaqueValuesToExpressions((_a = host.attributes) !== null && _a !== void 0 ? _a : {}),
+    listeners: (_b = host.listeners) !== null && _b !== void 0 ? _b : {},
+    properties: (_c = host.properties) !== null && _c !== void 0 ? _c : {},
     specialAttributes: {
       classAttr: host.classAttribute,
       styleAttr: host.styleAttribute
@@ -27600,10 +27655,12 @@ function convertOpaqueValuesToExpressions(obj) {
 }
 
 function convertDeclareComponentFacadeToMetadata(decl, typeSourceSpan, sourceMapUrl) {
+  var _a, _b, _c, _d;
+
   const {
     template,
     interpolation
-  } = parseJitTemplate(decl.template, decl.type.name, sourceMapUrl, decl.preserveWhitespaces ?? false, decl.interpolation);
+  } = parseJitTemplate(decl.template, decl.type.name, sourceMapUrl, (_a = decl.preserveWhitespaces) !== null && _a !== void 0 ? _a : false, decl.interpolation);
   const declarations = [];
 
   if (decl.dependencies) {
@@ -27629,38 +27686,40 @@ function convertDeclareComponentFacadeToMetadata(decl, typeSourceSpan, sourceMap
     decl.pipes && declarations.push(...convertPipeMapToMetadata(decl.pipes));
   }
 
-  return { ...convertDeclareDirectiveFacadeToMetadata(decl, typeSourceSpan),
+  return Object.assign(Object.assign({}, convertDeclareDirectiveFacadeToMetadata(decl, typeSourceSpan)), {
     template,
-    styles: decl.styles ?? [],
+    styles: (_b = decl.styles) !== null && _b !== void 0 ? _b : [],
     declarations,
     viewProviders: decl.viewProviders !== undefined ? new WrappedNodeExpr(decl.viewProviders) : null,
     animations: decl.animations !== undefined ? new WrappedNodeExpr(decl.animations) : null,
-    changeDetection: decl.changeDetection ?? ChangeDetectionStrategy.Default,
-    encapsulation: decl.encapsulation ?? ViewEncapsulation.Emulated,
+    changeDetection: (_c = decl.changeDetection) !== null && _c !== void 0 ? _c : ChangeDetectionStrategy.Default,
+    encapsulation: (_d = decl.encapsulation) !== null && _d !== void 0 ? _d : ViewEncapsulation.Emulated,
     interpolation,
     declarationListEmitMode: 2
     /* DeclarationListEmitMode.ClosureResolved */
     ,
     relativeContextFilePath: '',
     i18nUseExternalIds: true
-  };
+  });
 }
 
 function convertDeclarationFacadeToMetadata(declaration) {
-  return { ...declaration,
+  return Object.assign(Object.assign({}, declaration), {
     type: new WrappedNodeExpr(declaration.type)
-  };
+  });
 }
 
 function convertDirectiveDeclarationToMetadata(declaration, isComponent = null) {
+  var _a, _b, _c;
+
   return {
     kind: R3TemplateDependencyKind.Directive,
     isComponent: isComponent || declaration.kind === 'component',
     selector: declaration.selector,
     type: new WrappedNodeExpr(declaration.type),
-    inputs: declaration.inputs ?? [],
-    outputs: declaration.outputs ?? [],
-    exportAs: declaration.exportAs ?? null
+    inputs: (_a = declaration.inputs) !== null && _a !== void 0 ? _a : [],
+    outputs: (_b = declaration.outputs) !== null && _b !== void 0 ? _b : [],
+    exportAs: (_c = declaration.exportAs) !== null && _c !== void 0 ? _c : null
   };
 }
 
@@ -27733,7 +27792,7 @@ function wrapExpression(obj, property) {
 }
 
 function computeProvidedIn(providedIn) {
-  const expression = typeof providedIn === 'function' ? new WrappedNodeExpr(providedIn) : new LiteralExpr(providedIn ?? null); // See `convertToProviderExpression()` for why this uses `ForwardRefHandling.None`.
+  const expression = typeof providedIn === 'function' ? new WrappedNodeExpr(providedIn) : new LiteralExpr(providedIn !== null && providedIn !== void 0 ? providedIn : null); // See `convertToProviderExpression()` for why this uses `ForwardRefHandling.None`.
 
   return createMayBeForwardRefExpression(expression, 0
   /* ForwardRefHandling.None */
@@ -27755,9 +27814,11 @@ function convertR3DependencyMetadata(facade) {
 }
 
 function convertR3DeclareDependencyMetadata(facade) {
-  const isAttributeDep = facade.attribute ?? false;
+  var _a, _b, _c, _d, _e;
+
+  const isAttributeDep = (_a = facade.attribute) !== null && _a !== void 0 ? _a : false;
   const token = facade.token === null ? null : new WrappedNodeExpr(facade.token);
-  return createR3DependencyMetadata(token, isAttributeDep, facade.host ?? false, facade.optional ?? false, facade.self ?? false, facade.skipSelf ?? false);
+  return createR3DependencyMetadata(token, isAttributeDep, (_b = facade.host) !== null && _b !== void 0 ? _b : false, (_c = facade.optional) !== null && _c !== void 0 ? _c : false, (_d = facade.self) !== null && _d !== void 0 ? _d : false, (_e = facade.skipSelf) !== null && _e !== void 0 ? _e : false);
 }
 
 function createR3DependencyMetadata(token, isAttributeDep, host, optional, self, skipSelf) {
@@ -27829,6 +27890,8 @@ function parseInputOutputs(values) {
 }
 
 function convertDeclarePipeFacadeToMetadata(declaration) {
+  var _a, _b;
+
   return {
     name: declaration.type.name,
     type: wrapReference(declaration.type),
@@ -27836,8 +27899,8 @@ function convertDeclarePipeFacadeToMetadata(declaration) {
     typeArgumentCount: 0,
     pipeName: declaration.name,
     deps: null,
-    pure: declaration.pure ?? true,
-    isStandalone: declaration.isStandalone ?? false
+    pure: (_a = declaration.pure) !== null && _a !== void 0 ? _a : true,
+    isStandalone: (_b = declaration.isStandalone) !== null && _b !== void 0 ? _b : false
   };
 }
 
@@ -29646,10 +29709,9 @@ class I18NHtmlParser {
   parse(source, url, options = {}) {
     const interpolationConfig = options.interpolationConfig || DEFAULT_INTERPOLATION_CONFIG;
 
-    const parseResult = this._htmlParser.parse(source, url, {
-      interpolationConfig,
-      ...options
-    });
+    const parseResult = this._htmlParser.parse(source, url, Object.assign({
+      interpolationConfig
+    }, options));
 
     if (parseResult.errors.length) {
       return new ParseTreeResult(parseResult.rootNodes, parseResult.errors);
@@ -29802,14 +29864,6 @@ var FactoryTarget;
   FactoryTarget[FactoryTarget["Pipe"] = 3] = "Pipe";
   FactoryTarget[FactoryTarget["NgModule"] = 4] = "NgModule";
 })(FactoryTarget || (FactoryTarget = {}));
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -30348,7 +30402,9 @@ class R3BoundTarget {
   }
 
   getEntitiesInTemplateScope(template) {
-    return this.templateEntities.get(template) ?? new Set();
+    var _a;
+
+    return (_a = this.templateEntities.get(template)) !== null && _a !== void 0 ? _a : new Set();
   }
 
   getDirectivesOfNode(node) {
@@ -30438,9 +30494,11 @@ function extractTemplateEntities(rootScope) {
 
 
 function compileClassMetadata(metadata) {
-  // Generate an ngDevMode guarded call to setClassMetadata with the class identifier and its
+  var _a, _b; // Generate an ngDevMode guarded call to setClassMetadata with the class identifier and its
   // metadata.
-  const fnCall = importExpr(Identifiers.setClassMetadata).callFn([metadata.type, metadata.decorators, metadata.ctorParameters ?? literal(null), metadata.propDecorators ?? literal(null)]);
+
+
+  const fnCall = importExpr(Identifiers.setClassMetadata).callFn([metadata.type, metadata.decorators, (_a = metadata.ctorParameters) !== null && _a !== void 0 ? _a : literal(null), (_b = metadata.propDecorators) !== null && _b !== void 0 ? _b : literal(null)]);
   const iife = fn([], [devOnlyGuardedExpression(fnCall).toStmt()]);
   return iife.callFn([]);
 }
@@ -31174,9 +31232,9 @@ publishFacade(_global);
 
 /***/ }),
 
-/***/ 6344:
+/***/ 3757:
 /*!**********************************************************!*\
-  !*** ./node_modules/@angular/localize/fesm2020/init.mjs ***!
+  !*** ./node_modules/@angular/localize/fesm2015/init.mjs ***!
   \**********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -31184,7 +31242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "$localize": () => (/* reexport safe */ _angular_localize__WEBPACK_IMPORTED_MODULE_0__["ɵ$localize"])
 /* harmony export */ });
-/* harmony import */ var _angular_localize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/localize */ 9321);
+/* harmony import */ var _angular_localize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/localize */ 8642);
 /**
  * @license Angular v14.2.5
  * (c) 2010-2022 Google LLC. https://angular.io/
@@ -31205,9 +31263,9 @@ _angular_localize__WEBPACK_IMPORTED_MODULE_0__["ɵ_global"].$localize = _angular
 
 /***/ }),
 
-/***/ 9321:
+/***/ 8642:
 /*!**************************************************************!*\
-  !*** ./node_modules/@angular/localize/fesm2020/localize.mjs ***!
+  !*** ./node_modules/@angular/localize/fesm2015/localize.mjs ***!
   \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -31229,7 +31287,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ɵsplitBlock": () => (/* binding */ splitBlock),
 /* harmony export */   "ɵtranslate": () => (/* binding */ translate$1)
 /* harmony export */ });
-/* harmony import */ var _angular_compiler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/compiler */ 8781);
+/* harmony import */ var _angular_compiler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/compiler */ 8305);
 /**
  * @license Angular v14.2.5
  * (c) 2010-2022 Google LLC. https://angular.io/

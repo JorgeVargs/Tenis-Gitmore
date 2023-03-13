@@ -10528,7 +10528,6 @@ textarea.form-control-lg {
 .owl-theme .owl-dots .owl-dot {
   display: inline-block;
   zoom: 1;
-  *display: inline;
 }
 .owl-theme .owl-dots .owl-dot span {
   width: 10px;
@@ -12181,9 +12180,6 @@ body {
   font-weight: 400;
   position: relative;
   scroll-behavior: smooth;
-}
-.pt-10 {
-  padding-top: 10rem;
 }
 h2, .h2 {
   font-weight: 800;
